@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MQTT</title>
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="shortcut icon" href="shortcut.png" type="image/x-icon" />
+</head>
+<body>
+    <form>
+        <h1 id="hh">LED RGB</h1>
+        <label>
+            <input type="number" size="3" id="redInput" placeholder="Digite de 0 a 255"> 
+        </label> 
+        <label>
+            <input type="number" size="3" id="greenInput" placeholder="Digite de 0 a 255"> 
+        </label>
+        <label>
+            <input type="number" size="3" id="blueInput" placeholder="Digite de 0 a 255"> 
+        </label>
+        <button type="button" onclick="enviarParaMQTT()">Enviar</button>
+    </form>
+
+    <script src="arquivo.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MQTT</title>
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="shortcut icon" href="shortcut.png" type="image/x-icon" />
+</head>
+<body>
+    <form>
+        <h1 id="hh">LED RGB</h1>
+        <label>
+            <input type="number" size="3" id="redInput" placeholder="Digite de 0 a 255"> 
+        </label> 
+        <label>
+            <input type="number" size="3" id="greenInput" placeholder="Digite de 0 a 255"> 
+        </label>
+        <label>
+            <input type="number" size="3" id="blueInput" placeholder="Digite de 0 a 255"> 
+        </label>
+        <button type="button" onclick="enviarParaMQTT()">Enviar</button>
+    </form>
+
+    <script src="micro.js"></script>
+</body>
+</html>
