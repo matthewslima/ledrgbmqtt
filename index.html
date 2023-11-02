@@ -21,7 +21,7 @@ function enviarParaMQTT() {
     const redValue = "2";
 
     // Configurar a conexão com o servidor MQTT
-    const client = mqtt.connect('tcp://broker.mqtt.cool:1883'); // Use um servidor MQTT compatível com conexão segura (WebSocket)
+    const client = mqtt.connect('ws://m@broker.emqx.io:8083'); // Use um servidor MQTT compatível com conexão segura (WebSocket)
 
     client.on('connect', function () {
         console.log('Conectado ao servidor MQTT');
