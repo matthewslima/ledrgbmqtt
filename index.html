@@ -7,6 +7,13 @@
     <h1>Envio de Mensagem MQTT</h1>
     <button id="enviar">Enviar Mensagem MQTT</button>
     <script src="micro.js"></script>
-    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const enviarButton = document.getElementById("enviar");
+            enviarButton.addEventListener("click", function () {
+                enviarParaMQTT(); // Chama a função quando o botão é clicado
+            });
+        });
+    </script>
 </body>
 </html>
