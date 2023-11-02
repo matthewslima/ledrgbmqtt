@@ -1,7 +1,7 @@
 
 // Configurar o cliente MQTT
     var clientId = "cliente-web";
-    var serverUrl = "tcp://broker.mqtt.cool:1883"; // Substitua pelo seu servidor MQTT
+    var serverUrl = "broker.mqtt.cool:1883"; // Substitua pelo seu servidor MQTT
     var client = new Paho.MQTT.Client(serverUrl, clientId);
 // Conectar ao servidor MQTT
     client.connect({
