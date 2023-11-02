@@ -1,25 +1,28 @@
-function enviarParaMQTT() {
-    var redValue = document.getElementById("redInput").value;
-    var greenValue = document.getElementById("greenInput").value;
-    var blueValue = document.getElementById("blueInput").value;
 
-    var client = new Paho.MQTT.Client("mqtt_server", 9001, "client_id");
-
-    client.onConnectionLost = function(responseObject) {
-        if (responseObject.errorCode !== 0) {
-            console.log("Conexão perdida: " + responseObject.errorMessage);
-        }
-    };
-
+// Configurar o cliente MQTT
+    var clientId = "cliente-web";
+    var serverUrl = "tcp://broker.mqtt.cool:1883"; // Substitua pelo seu servidor MQTT
+    var client = new Paho.MQTT.Client(serverUrl, clientId);
+// Conectar ao servidor MQTT
     client.connect({
-        onSuccess: function() {
-            console.log("Conectado ao servidor MQTT");
-            var message = new Paho.MQTT.Message("RGB: " + redValue + "," + greenValue + "," + blueValue);
-            message.destinationName = "topic";
-            client.send(message);
-        },
-        onFailure: function(err) {
-            console.log("Erro de conexão: " + err.errorMessage);
-        }
-    });
+        onSuccess: onConnect,
+        onFailure: onFailure
+});
+// Callback de conexão bem-sucedida
+    function onConnect() {
+        console.log("Conectado ao servidor MQTT.");
 }
+// Callback de falha na conexão
+    function onFailure(errorMessage) {
+        console.log("Falha na conexão: " + errorMessage.errorMessage);
+}
+// Enviar mensagem MQTT
+    document.getElementById("enviar").addEventListener("click", function() {
+        var topic = "ifce.info"; // Substitua pelo tópico desejado
+        var message = "Mensagem MQTT de exemplo";
+        var messageObj = new Paho.MQTT.Message(message);
+        
+        messageObj.destinationName = topic;
+        client.send(messageObj);
+        console.log("Mensagem MQTT enviada: " + message);
+        });
