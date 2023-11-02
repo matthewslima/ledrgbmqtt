@@ -1,28 +1,40 @@
+const mqtt = require('mqtt');
 
-// Configurar o cliente MQTT
-    var clientId = "cliente-web";
-    var serverUrl = "broker.mqtt.cool:1883"; // Substitua pelo seu servidor MQTT
-    var client = new Paho.MQTT.Client(serverUrl, clientId);
-// Conectar ao servidor MQTT
-    client.connect({
-        onSuccess: onConnect,
-        onFailure: onFailure
+document.addEventListener("DOMContentLoaded", function () {
+    const enviarButton = document.getElementById("enviar");
+    enviarButton.addEventListener("click", function () {
+        enviarParaMQTT(); // Chama a função quando o botão é clicado
+    });
 });
-// Callback de conexão bem-sucedida
-    function onConnect() {
-        console.log("Conectado ao servidor MQTT.");
-}
-// Callback de falha na conexão
-    function onFailure(errorMessage) {
-        console.log("Falha na conexão: " + errorMessage.errorMessage);
-}
-// Enviar mensagem MQTT
-    document.getElementById("enviar").addEventListener("click", function() {
-        var topic = "ifce"; // Substitua pelo tópico desejado
-        var message = "Mensagem MQTT de exemplo";
-        var messageObj = new Paho.MQTT.Message(message);
-        
-        messageObj.destinationName = topic;
-        client.send(messageObj);
-        console.log("Mensagem MQTT enviada: " + message);
+
+console.log('MQTT');
+
+function enviarParaMQTT() {
+    console.log('Entrou na função enviarParaMQTT'); // Mensagem de depuração
+
+    const redValue = "2";
+
+    // Configurar a conexão com o servidor MQTT
+    const client = mqtt.connect('tcp://broker.mqtt.cool:1883'); // Substitua 'mqtt_server' pelo endereço do seu servidor MQTT
+
+    client.on('connect', function () {
+        console.log('Conectado ao servidor MQTT');
+        const message = redValue;
+
+        // Publicar a mensagem no tópico desejado
+        client.publish('ifce', message, function (err) {
+            if (!err) {
+                console.log('Mensagem enviada com sucesso.');
+            } else {
+                console.error('Erro ao enviar mensagem: ' + err);
+            }
+            client.end(); // Encerra a conexão após a publicação
         });
+    });
+
+    client.on('error', function (err) {
+        console.error('Erro de conexão: ' + err);
+    });
+}
+
+
