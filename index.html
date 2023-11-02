@@ -2,56 +2,56 @@
 <html>
 <head>
     <title>Exemplo MQTT</title>
-    
-   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
 </head>
 <body>
     <h1>Envio de Mensagem MQTT</h1>
     <button id="enviar">Enviar Mensagem MQTT</button>
     
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
-
     <script>
-       
         console.log('MQTT');
 
-function enviarParaMQTT() {
-    console.log('Entrou na função enviarParaMQTT'); // Mensagem de depuração
+        // Defina o servidor MQTT e outras configurações
+        var mqttServer = "broker.mqtt.cool";
+        var mqttPort = 1883; // Porta MQTT
+        var mqttTopic = "ifce"; // Tópico MQTT
 
-    const redValue = "2";
+        function enviarParaMQTT() {
+            console.log('Entrou na função enviarParaMQTT'); // Mensagem de depuração
 
-    // Configurar a conexão com o servidor MQTT
-    const client = mqtt.connect('tcp://broker.mqtt.cool:1883'); // Use um servidor MQTT compatível com conexão segura (WebSocket)
+            const redValue = "2";
 
-    client.on('connect', function () {
-        console.log('Conectado ao servidor MQTT');
-        const message = redValue;
+            // Configurar a conexão com o servidor MQTT
+            var client = new Paho.MQTT.Client(mqttServer, mqttPort, "client_id");
 
-        // Publicar a mensagem no tópico desejado
-        client.publish('ifce', message, function (err) {
-            if (!err) {
-                console.log('Mensagem enviada com sucesso.');
-            } else {
-                console.error('Erro ao enviar mensagem: ' + err);
-            }
-            client.end(); // Encerra a conexão após a publicação
-        });
-    });
+            // Defina a função de callback de conexão
+            client.onConnectionLost = function(responseObject) {
+                if (responseObject.errorCode !== 0) {
+                    console.log("Conexão perdida: " + responseObject.errorMessage);
+                }
+            };
 
-    client.on('error', function (err) {
-        console.error('Erro de conexão: ' + err);
-    });
-}
-        
+            // Conecte-se ao servidor MQTT
+            client.connect({
+                onSuccess: function() {
+                    console.log("Conectado ao servidor MQTT");
+                    const message = redValue;
+
+                    // Publicar a mensagem no tópico desejado
+                    client.publish(mqttTopic, message);
+                },
+                onFailure: function(err) {
+                    console.log("Erro de conexão: " + err.errorMessage);
+                }
+            });
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
             const enviarButton = document.getElementById("enviar");
             enviarButton.addEventListener("click", function () {
                 enviarParaMQTT(); // Chama a função quando o botão é clicado
             });
         });
-
-        
     </script>
 </body>
 </html>
