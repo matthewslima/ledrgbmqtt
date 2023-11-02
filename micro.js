@@ -1,12 +1,3 @@
-const mqtt = require('mqtt');
-
-document.addEventListener("DOMContentLoaded", function () {
-    const enviarButton = document.getElementById("enviar");
-    enviarButton.addEventListener("click", function () {
-        enviarParaMQTT(); // Chama a função quando o botão é clicado
-    });
-});
-
 console.log('MQTT');
 
 function enviarParaMQTT() {
@@ -15,7 +6,7 @@ function enviarParaMQTT() {
     const redValue = "2";
 
     // Configurar a conexão com o servidor MQTT
-    const client = mqtt.connect('tcp://broker.mqtt.cool:1883'); // Substitua 'mqtt_server' pelo endereço do seu servidor MQTT
+    const client = mqtt.connect('tcp://broker.mqtt.cool:1883'); // Use um servidor MQTT compatível com conexão segura (WebSocket)
 
     client.on('connect', function () {
         console.log('Conectado ao servidor MQTT');
@@ -36,5 +27,3 @@ function enviarParaMQTT() {
         console.error('Erro de conexão: ' + err);
     });
 }
-
-
