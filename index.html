@@ -13,8 +13,7 @@
         console.log('MQTT');
 
         // Defina o servidor MQTT e outras configurações
-        var mqttServer = "ws://broker.hivemq.com";
-        var mqttPort = 8000; // Porta MQTT
+       
         var mqttTopic = "ifce"; // Tópico MQTT
 
         function enviarParaMQTT() {
@@ -23,7 +22,8 @@
             const redValue = "2";
 
             // Configurar a conexão com o servidor MQTT
-            var client = new Paho.MQTT.Client(mqttServer, mqttPort, "client_id");
+           const client = new Paho.MQTT.Client("ws://broker.hivemq.com", 8000, "client_id");
+
 
             // Defina a função de callback de conexão
             client.onConnectionLost = function(responseObject) {
