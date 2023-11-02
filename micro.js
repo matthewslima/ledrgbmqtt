@@ -18,7 +18,7 @@
 }
 // Enviar mensagem MQTT
     document.getElementById("enviar").addEventListener("click", function() {
-        var topic = "ifce.info"; // Substitua pelo tópico desejado
+        var topic = "ifce"; // Substitua pelo tópico desejado
         var message = "Mensagem MQTT de exemplo";
         var messageObj = new Paho.MQTT.Message(message);
         
