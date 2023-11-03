@@ -7,7 +7,7 @@
     <h1>Envio de Mensagem MQTT</h1>
     <button id="enviar">Enviar Mensagem MQTT</button>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/2.0.9/paho-mqtt.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.2/mqttws31.js"></script>
 
     <script>
         console.log('MQTT');
@@ -21,22 +21,21 @@
             const redValue = "2";
 
             // Configurar a conexão com o servidor MQTT
-            const client = new Paho.MQTT.Client("broker.hivemq.com", 8001, "client_id");
+        
+            var client = new Paho.MQTT.Client("broker.mqtt.cool", 1883, "clientId");
+            
+            client.connect({onSuccess:onConnect});
 
-            // Altere a URL para WebSocket seguro (wss://)
-            client.connect({
-                useSSL: true,
-                onSuccess: function() {
-                    console.log("Conectado ao servidor MQTT");
-                    const message = redValue;
-
-                    // Publicar a mensagem no tópico desejado
-                    client.publish(mqttTopic, message);
-                },
-                onFailure: function(err) {
-                    console.log("Erro de conexão: " + err.errorMessage);
+            function onConnect() {
+                console.log("Conectado ao servidor MQTT");
                 }
-            });
+
+                const message = redValue;
+                function enviarComando(comando) {
+                    message = new Paho.MQTT.Message(comando);
+                    message.destinationName = "ifce";
+                    client.send(message);
+                }  
         }
 
         document.addEventListener("DOMContentLoaded", function () {
